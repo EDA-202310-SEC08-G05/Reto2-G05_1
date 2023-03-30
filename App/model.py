@@ -208,8 +208,26 @@ def req_3(data, anio):
     
     datoanio = get_data(data, anio)
     
+    byCSE = mp.newMap(1000,
+                               maptype="CHAINING",
+                               loadfactor=4.0,
+                               cmpfunction=comp_anio)
     
+    datoanioiterables = lt.iterator(me.getValue(datoanio)["Datos"])
     
+    for anio in datoanioiterables:
+        addCSE(byCSE, anio['Código subsector económico'], anio)
+    
+    byCSEiterable = lt.iterator(me.getValue(datoanio)["Datos"])
+    
+    """totales = {}
+    
+    for CSE in byCSEiterable:
+        if totales["Código subsector económico"] == CSE["Código subsector económico"]:
+            totales = {"Total de retenciones del subsector económico": totales{}, "Total ingresos netos del subsector enconómico":"", "Total costos y gastos del subsector económico":"", "Total saldo a pagar del subsector económico":"", "Total saldo a favor del subsector económico":""}
+    """
+   
+   #for 
     
 def newCSE(CSE):
     entry = {'Código subsector económico': "", "Datos": None}
@@ -304,6 +322,18 @@ def cmpYears(year1, year2):
         return -1
     
 
+def comp_CSE(dato_1,dato_2):
+    anio1=dato_1
+    anio2=me.getKey(dato_2)
+    
+    if int(anio1)>int(anio2):
+        return 1
+    elif int(anio1)<int(anio2):
+        return -1
+    elif int(anio1)==int(anio2):
+        return 0
+    
+
 def cmpMapTaxAnio(entry_1, entry_2):
     
     
@@ -311,6 +341,8 @@ def cmpMapTaxAnio(entry_1, entry_2):
         return True
     else:
         return False
+    
+    
     
 def cmpMapSaldoPagar(entry_1, entry_2):
     
