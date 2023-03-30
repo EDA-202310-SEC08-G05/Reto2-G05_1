@@ -200,12 +200,34 @@ def req_2(data, anio, cod):
     return data
 
 
-def req_3(data_structs):
+def req_3(data, anio):
     """
     Función que soluciona el requerimiento 3
     """
     # TODO: Realizar el requerimiento 3
-    pass
+    
+    datoanio = get_data(data, anio)
+    
+    
+    
+    
+def newCSE(CSE):
+    entry = {'Código subsector económico': "", "Datos": None}
+    entry['Código subsector económico'] = CSE
+    entry['Datos'] = lt.newList('SINGLE_LINKED')
+    return entry
+
+def addCSE(mapa, CSE, info):
+    
+    authors = mapa
+    existauthor = mp.contains(authors, CSE)
+    if existauthor:
+        entry = mp.get(authors, CSE)
+        author = me.getValue(entry)
+    else:
+        author = newCSE(CSE)
+        mp.put(authors, CSE, author)
+    lt.addLast(author['Datos'], info)
 
 
 def req_4(data_structs):
